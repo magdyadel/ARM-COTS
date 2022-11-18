@@ -26,13 +26,13 @@ static void PWM_Init()
 
     // Create 50Hz PWM
     // Prescale timer clock from 8MHz to 1MHz by prescaler = 100 ...8*10^6 / 8 = 10^6
-    timer2CFG.Prescaler = 8;
+    timer2CFG.Prescaler = 8-1;
     // TIM_Period = (timer_clock / PWM_frequency) - 1
     // TIM_Period = (1MHz / 50Hz) - 1 =19999
 	/* Those Equations Sets The F_pwm = 50Hz & Maximizes The Resolution*/
 //	PSC_Value = (uint32_t) (SERVO_CfgParam[au16_SERVO_Instance].TIM_CLK / 3276800.0);
 //	ARR_Value = (uint32_t) ((SERVO_CfgParam[au16_SERVO_Instance].TIM_CLK / (50.0*(PSC_Value+1.0)))-1.0);
-    timer2CFG.Period = 19999;
+    timer2CFG.Period = 20000-1;
     timer2CFG.ClockDivision = TIM_CKD_DIV1;
     timer2CFG.CounterMode = TIM_CounterMode_Up;
 
@@ -46,7 +46,7 @@ static void PWM_Init()
     TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
     // We initialize PWM value with duty cycle of 0%
-    TIM_OCInitStruct.TIM_Pulse = 0;
+    TIM_OCInitStruct.TIM_Pulse = 1000;//
     MCAL_TIMERx_OC1Init(TIMER2, &TIM_OCInitStruct);
     MCAL_TIMERx_OC1PreloadConfig(TIMER2, TIM_OCPreload_Enable);
 
