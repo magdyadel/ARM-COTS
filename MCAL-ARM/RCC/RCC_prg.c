@@ -25,6 +25,8 @@ void MCAL_RCC_vInit(void)
 
 	/* HSI settings */
 	#elif RCC_CLOCK_TYPE == RCC_HSI
+		//RCC->CR   = 0x00000081; /* Enable HSI + Trimming = 0 */
+		//RCC->CFGR = 0x00000000; /* Select HSI as clock source */
 		RCC->CR   = 0x00000081; /* Enable HSI + Trimming = 0 */
 		RCC->CFGR = 0x00000000; /* Select HSI as clock source */
 
@@ -54,6 +56,17 @@ void MCAL_RCC_vInit(void)
 		#error("You have chosen wrong clock type")
 	#endif
 
+}
+
+void MCAL_RCC_vDisableAllInterrupt(void)
+{
+	/* Disable all interrupts and clear pending bits  */
+	RCC->CIR = 0x009F0000;
+}
+void MCAL_RCC_vEnHSIInterrupt(void)
+{
+	/* Enable HSI interrupts and clear pending bits  */
+	RCC->CIR = 0x009F0400;
 }
 
 void MCAL_RCC_vEnableClk(u16 A_u16PeripheralID,u8 A_u8BusID)

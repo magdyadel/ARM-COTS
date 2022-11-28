@@ -8,6 +8,11 @@
 #ifndef RCC_RCC_INT_H_
 #define RCC_RCC_INT_H_
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
+
+
 
 /*
  *=======================================================================
@@ -34,10 +39,11 @@
 #define RCC_AFIO_APB2			0
 
 //Clock Enable Timers
+#define RCC_TIM1_APB2			0
 #define RCC_TIM2_APB1			0
 #define RCC_TIM3_APB1			1
 #define RCC_TIM4_APB1			2
-
+#define RCC_TIM5_APB1			2
 
 //Clock Enable USART
 #define RCC_USART1_APB2			14
@@ -70,8 +76,15 @@ void MCAL_RCC_vDisableClk(u16 A_u16PeripheralID,u8 A_u8BusID);
 
 void MCAL_RCC_vRESET(u16 A_u16PeripheralID , u8 A_u8BusID);
 
+void MCAL_RCC_vDisableAllInterrupt(void);
+void MCAL_RCC_vEnHSIInterrupt(void);
 
 //===================================================================================
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RCC_RCC_INT_H_ */

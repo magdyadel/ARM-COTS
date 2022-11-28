@@ -16,7 +16,7 @@
 			RCC_PLL
 		}
 */
-#define RCC_CLOCK_TYPE 		RCC_HSE_CRYSTAL
+#define RCC_CLOCK_TYPE 		RCC_HSE
 
 /* Note: Select PLL Value if you have PLL as input clock source */
 #if RCC_CLOCK_TYPE == RCC_PLL

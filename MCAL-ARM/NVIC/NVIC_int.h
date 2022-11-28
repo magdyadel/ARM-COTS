@@ -8,6 +8,10 @@
 #ifndef MCAL_ARM_NVIC_NVIC_INT_H_
 #define MCAL_ARM_NVIC_NVIC_INT_H_
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
+
 
 
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -64,5 +68,11 @@ void MCAL_NVIC_vClearPendingFlag(u8 A_u8IntID);
 u8 MCAL_NVIC_u8GetActiveFlag(u8 A_u8IntID);
 
 void MCAL_NVIC_vSetPriority(s8 A_s8IntID, u8 A_u8GroupPriority, u8 A_u8SubPriority, u8 A_u8Group);
+
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MCAL_ARM_NVIC_NVIC_INT_H_ */

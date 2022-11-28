@@ -9,14 +9,19 @@
 #define MCAL_ARM_TIMERS_TIMERS_PVT_H_
 
 //-*-*-*-*-*-*-*-*-*-*-*
-//Peripheral register: TIMER - BUS APB2
+//Peripheral register: TIMER - BUS
 //-*-*-*-*-*-*-*-*-*-*-*
+//TIM1 - APB2
+#define TIM1_Base 				0x40012C00UL
+//APB1
 //TIM2
 #define TIM2_Base 				0x40000000UL
 //TIM3
 #define TIM3_Base 				0x40000400UL
 //TIM4
 #define TIM4_Base 				0x40000800UL
+//TIM5
+#define TIM5_Base 				0x40000C00UL
 
 typedef struct{
 	volatile u32 CR1;
@@ -39,10 +44,11 @@ typedef struct{
 }TIMx_TypeDef;
 
 
-
+#define TIM1					((TIMx_TypeDef *)TIM1_Base)
 #define TIM2					((TIMx_TypeDef *)TIM2_Base)
 #define TIM3					((TIMx_TypeDef *)TIM3_Base)
 #define TIM4					((TIMx_TypeDef *)TIM4_Base)
+#define TIM5					((TIMx_TypeDef *)TIM5_Base)
 //-----------------------------------------------------------------
 
 

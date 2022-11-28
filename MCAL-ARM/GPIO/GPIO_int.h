@@ -8,6 +8,12 @@
 #ifndef MCAL_ARM_GPIO_GPIO_INT_H_
 #define MCAL_ARM_GPIO_GPIO_INT_H_
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
+
+
+
 #include "GPIO_pvt.h"
 
 //=================================================================
@@ -222,5 +228,10 @@ void MCAL_GPIO_vTogglePin(GPIOxHandle_t GPIOx , u16 PinNumber);
  */
 GPIO_ErrorStatusType  MCAL_GPIO_enuLockPin(GPIOxHandle_t GPIOx , u16 PinNumber);
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MCAL_ARM_GPIO_GPIO_INT_H_ */

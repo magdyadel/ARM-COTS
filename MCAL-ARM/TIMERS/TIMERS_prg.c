@@ -18,11 +18,12 @@ void MCAL_TIMERx_vInit(TIMERx_t timer, TIMERx_Cfg_t * timerCFG)
 	u16 tmpcr1 = 0;
 	TIMx_TypeDef* TIMx =NULL;
 	switch (timer) {
+		case TIMER1: TIMx=TIM1; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM5; break;
 	}
-
 
 	tmpcr1 = TIMx->CR1;
 
@@ -52,9 +53,11 @@ void MCAL_TIMERx_vDeInit(TIMERx_t timer)
 	//Set and cleared by software.
 	switch (timer)
 	{
+		case TIMER1: MCAL_RCC_vRESET( RCC_TIM1_APB2, RCC_APB2); break;
 		case TIMER2: MCAL_RCC_vRESET( RCC_TIM2_APB1, RCC_APB1); break;
 		case TIMER3: MCAL_RCC_vRESET( RCC_TIM3_APB1, RCC_APB1); break;
 		case TIMER4: MCAL_RCC_vRESET( RCC_TIM4_APB1, RCC_APB1); break;
+		case TIMER5: MCAL_RCC_vRESET( RCC_TIM5_APB1, RCC_APB1); break;
 	}
 
 }
@@ -71,9 +74,11 @@ void MCAL_TIMERx_vStart(TIMERx_t timer)
 {
 	TIMx_TypeDef* TIMx =NULL;
 	switch (timer) {
+		case TIMER1: TIMx=TIM1; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM5; break;
 	}
 
     /* Enable the TIM Counter */
@@ -86,9 +91,11 @@ void MCAL_TIMERx_vStop(TIMERx_t timer)
 {
 	TIMx_TypeDef* TIMx =NULL;
 	switch (timer) {
+		case TIMER1: TIMx=TIM1; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM5; break;
 	}
 
 	/* Disable the TIM Counter */
@@ -108,16 +115,19 @@ void MCAL_TIMERx_vStop(TIMERx_t timer)
 void MCAL_TIMERx_OC1Init(TIMERx_t timer, TIM_OCInitTypeDef* TIM_OCInitStruct)
 {
 	TIMx_TypeDef* TIMx = NULL;
+
 	switch (timer) {
+		case TIMER1: TIMx=TIM2; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM2; break;
 	}
 	u16 tmpccmrx = 0, tmpccer = 0, tmpcr2 = 0;
 
 	/* Disable the Channel 1: Reset the CC1E Bit */
 	TIMx->CCER &= (u16)(~(u16)0x0001);//TIM_CCER_CC1E);
-	/* Get the TIMx CCER register value */
+		/* Get the TIMx CCER register value */
 	tmpccer = TIMx->CCER;
 	/* Get the TIMx CR2 register value */
 	tmpcr2 =  TIMx->CR2;
@@ -167,9 +177,11 @@ void MCAL_TIMERx_OC1PreloadConfig(TIMERx_t timer, u16 TIM_OCPreload)
 {
 	TIMx_TypeDef* TIMx = NULL;
 	switch (timer) {
+		case TIMER1: TIMx=TIM1; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM5; break;
 	}
 	u16 tmpccmr1 = 0;
 
@@ -193,9 +205,11 @@ void MCAL_TIMERx_SetCompare1(TIMERx_t timer, u16 CompareVAL1)
 {
 	TIMx_TypeDef* TIMx = NULL;
 	switch (timer) {
+		case TIMER1: TIMx=TIM1; break;
 		case TIMER2: TIMx=TIM2; break;
 		case TIMER3: TIMx=TIM3; break;
 		case TIMER4: TIMx=TIM4; break;
+		case TIMER5: TIMx=TIM5; break;
 	}
 	/* Set the Capture Compare1 Register value */
 	TIMx->CCRn[0] = CompareVAL1;

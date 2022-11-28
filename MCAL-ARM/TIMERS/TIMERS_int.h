@@ -9,6 +9,9 @@
 #define MCAL_ARM_TIMERS_TIMERS_INT_H_
 
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
 
 
 //=================================================================
@@ -58,9 +61,11 @@ typedef struct
 //@ref TIMERx_define
 typedef enum
 {
-	TIMER2 = 0 ,
-	TIMER3     ,
-	TIMER4
+	TIMER1 = 0	,
+	TIMER2		,
+	TIMER3     	,
+	TIMER4 	   	,
+	TIMER5
 }TIMERx_t;
 
 // @ref TIM_Counter_Mode
@@ -123,6 +128,10 @@ void MCAL_TIMERx_SetCompare1(TIMERx_t timer, u16 CompareVAL1);
 void dus(u32 us);
 void dms(u32 ms);
 
+
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
 
 
 #endif /* MCAL_ARM_TIMERS_TIMERS_INT_H_ */

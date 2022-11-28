@@ -8,6 +8,11 @@
 #ifndef MCAL_ARM_STK_STK_INT_H_
 #define MCAL_ARM_STK_STK_INT_H_
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
+
+
 //=======================================================================
 //Configuration References
 //=======================================================================
@@ -44,5 +49,10 @@ u32  MCAL_STK_u32GetRemainingTime     (void);
 
 //=======================================================================
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MCAL_ARM_STK_STK_INT_H_ */

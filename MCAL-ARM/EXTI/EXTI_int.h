@@ -8,6 +8,11 @@
 #ifndef MCAL_ARM_EXTI_EXTI_INT_H_
 #define MCAL_ARM_EXTI_EXTI_INT_H_
 
+#ifdef __cplusplus // intrinsic macro
+extern "C" {
+#endif
+
+
 #include "../GPIO/GPIO_int.h"
 #include "EXTI_pvt.h"
 
@@ -216,5 +221,11 @@ void MCAL_EXTI_vUpdate(EXTI_PinCFGHandle EXTI_cfg);
  * Note 			-	none
  */
 void MCAL_EXTI_vTriggerSwInterrupt(EXTI_LineNum_t A_xLineId);
+
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MCAL_ARM_EXTI_EXTI_INT_H_ */
