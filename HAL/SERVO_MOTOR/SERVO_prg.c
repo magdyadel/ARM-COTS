@@ -12,44 +12,44 @@
 #include "../../MCAL-ARM/RCC/RCC_int.h"
 #include "SERVO_int.h"
 
+#define Delta  			((MaxPulse-MinPulse))
 
 
 static void PWM_Init()
 {
     // Initialization struct
 	TIMERx_Cfg_t timer2CFG;
-    TIM_OCInitTypeDef TIM_OCInitStruct;
+    TIM_OCInitTypeDef Tim2_OutChnl;
 
 
     // Step 1: Initialize TIM2
     MCAL_RCC_vEnableClk(RCC_TIM2_APB1,RCC_APB1);
 
     // Create 50Hz PWM
+    // 50 = FCPU / ((X-1)*20000)
+    // => X =  ( (FCPU/(20000*50) )+1;
     // Prescale timer clock from 8MHz to 1MHz by prescaler = 100 ...8*10^6 / 8 = 10^6
-    timer2CFG.Prescaler = 8-1;
-    // TIM_Period = (timer_clock / PWM_frequency) - 1
-    // TIM_Period = (1MHz / 50Hz) - 1 =19999
-	/* Those Equations Sets The F_pwm = 50Hz & Maximizes The Resolution*/
-//	PSC_Value = (uint32_t) (SERVO_CfgParam[au16_SERVO_Instance].TIM_CLK / 3276800.0);
-//	ARR_Value = (uint32_t) ((SERVO_CfgParam[au16_SERVO_Instance].TIM_CLK / (50.0*(PSC_Value+1.0)))-1.0);
-    timer2CFG.Period = 20000-1;
+    timer2CFG.Prescaler = 8;//;
+
+//	ARR_Value = 20000 for servo motor;
+    timer2CFG.Period = 20000;
     timer2CFG.ClockDivision = TIM_CKD_DIV1;
     timer2CFG.CounterMode = TIM_CounterMode_Up;
-
     MCAL_TIMERx_vInit(TIMER2, &timer2CFG);
-    // Start TIM2
-    MCAL_TIMERx_vStart(TIMER2);
+
 
     // Step 2: Initialize PWM
     // Common PWM settings
-    TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
-    TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
-    TIM_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
+    Tim2_OutChnl.TIM_OCMode = TIM_OCMode_PWM1;
+    Tim2_OutChnl.TIM_OutputState = TIM_OutputState_Enable;
+    Tim2_OutChnl.TIM_OCPolarity = TIM_OCPolarity_High;
     // We initialize PWM value with duty cycle of 0%
-    TIM_OCInitStruct.TIM_Pulse = 1000;//
-    MCAL_TIMERx_OC1Init(TIMER2, &TIM_OCInitStruct);
+    Tim2_OutChnl.TIM_Pulse = 0;//1000;//
+    MCAL_TIMERx_OC1Init(TIMER2, &Tim2_OutChnl);
     MCAL_TIMERx_OC1PreloadConfig(TIMER2, TIM_OCPreload_Enable);
 
+    // Start TIM2
+    MCAL_TIMERx_vStart(TIMER2);
 }
 
 static void GPIO_Init(void)
@@ -74,7 +74,8 @@ void SERVO_vInit(void)
 
 void SERVOM_vStart(u8 Copy_u8Angle)
 {
-	u16 mappedValue = (Copy_u8Angle/0.18F) + 1000;
+	//BY test 0 degree at 420 & 180 degree at 2000
+	u16 mappedValue = ((Copy_u8Angle/180.0F)*Delta )+MinPulse ; //(Copy_u8Angle/0.18F)+1000;
 //	uint16_t au16_Pulse = 0;
 //
 //	au16_Pulse = ((af_Angle*(gs_SERVO_info[au16_SERVO_Instance].Period_Max - gs_SERVO_info[au16_SERVO_Instance].Period_Min))/180.0)
@@ -84,6 +85,16 @@ void SERVOM_vStart(u8 Copy_u8Angle)
 
 void SERVOM_vStop(void)
 {
-	MCAL_TIMERx_SetCompare1(TIMER2, 1000);//Angle
+	MCAL_TIMERx_SetCompare1(TIMER2, MinPulse);//Angle
 //	TIMERS_vSetCompareMatchValue(SERVOM_TIMER, SERVOM_TIMER_Channel, 1000);
+}
+void SERVOM_vMax(void)
+{
+	MCAL_TIMERx_SetCompare1(TIMER2, MaxPulse);//Angle
+}
+
+
+void SERVOM_vtest(u16 Copy_u8Angle)
+{
+	MCAL_TIMERx_SetCompare1(TIMER2, Copy_u8Angle);//Angle
 }
